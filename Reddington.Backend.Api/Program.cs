@@ -12,6 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<IProbabilityCalculator, ProbabilityCalculator>();
 builder.Services.AddScoped<IFileLogger, FileLogger>();
 
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>

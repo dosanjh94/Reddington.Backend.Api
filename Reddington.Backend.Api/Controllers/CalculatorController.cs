@@ -9,10 +9,12 @@ namespace Reddington.Backend.Api.Controllers;
 [Route("[controller]")]
 public class CalculatorController : ControllerBase
 {
-    private readonly string _logFilePath = "log.txt";
+    private readonly IProbabilityCalculator _probabilityCalculator;
     private readonly IFileLogger _fileLogger;
-    public CalculatorController(IFileLogger filelogger)
+    private readonly string _logFilePath = "log.txt";
+    public CalculatorController(IProbabilityCalculator probabilityCalculator, IFileLogger filelogger)
     {
+        _probabilityCalculator = probabilityCalculator;
         _fileLogger = filelogger;
     }
 
@@ -24,13 +26,7 @@ public class CalculatorController : ControllerBase
             return BadRequest("Invalid probability range (must be between 0 and 1)");
         }
 
-        // perform calculation
-        double result = selectedFunction.ToLower() switch
-        {
-            "combinedwith" => probabilityA * probabilityB,
-            "either" => probabilityA + probabilityB - probabilityA * probabilityB,
-            _ => throw new ArgumentException("Invalid function name")
-        };
+        var result = _probabilityCalculator.Calculate(probabilityA, probabilityB, selectedFunction);
 
         _fileLogger.LogToFile(probabilityA, probabilityB, selectedFunction, result, _logFilePath);
 
