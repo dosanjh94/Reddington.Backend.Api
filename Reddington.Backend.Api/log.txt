@@ -36,3 +36,4 @@
 {"Date":"2023-05-02T16:09:02.16949+01:00","FunctionName":"Either","Inputs":[1.0,0.3],"Result":1.0}
 {"Date":"2023-05-02T16:09:06.995584+01:00","FunctionName":"CombinedWith","Inputs":[1.0,0.3],"Result":0.3}
 {"Date":"2023-05-02T16:53:32.359327+01:00","FunctionName":"either","Inputs":[0.1,0.1],"Result":0.19}
+{"Date":"2023-05-15T10:52:08.013816+01:00","FunctionName":"either","Inputs":[0.3,0.4],"Result":0.58}

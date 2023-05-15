@@ -26,11 +26,18 @@ public class CalculatorController : ControllerBase
             return BadRequest("Invalid probability range (must be between 0 and 1)");
         }
 
+        RegisterFunctions();
         var result = _probabilityCalculator.Calculate(probabilityA, probabilityB, selectedFunction);
 
         _fileLogger.LogToFile(probabilityA, probabilityB, selectedFunction, result, _logFilePath);
 
         return new CalculationResult { Result = result };
+    }
+
+    private void RegisterFunctions()
+    {
+        _probabilityCalculator.RegisterFunction("either", new Either());
+        _probabilityCalculator.RegisterFunction("combinedwith", new CombinedWith());
     }
 }
 

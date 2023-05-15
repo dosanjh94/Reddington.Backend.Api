@@ -13,7 +13,9 @@ namespace Reddington.Backend.Api.Unit.Tests.Services
 		public ProbabilityCalculatorTests()
 		{
             _sut = new ProbabilityCalculator();
-		}
+            _sut.RegisterFunction("either", new Either());
+            _sut.RegisterFunction("combinedwith", new CombinedWith());
+        }
 
         [Theory]
         [InlineData(0.5, 0.5, "combinedwith", 0.25)]
@@ -23,24 +25,15 @@ namespace Reddington.Backend.Api.Unit.Tests.Services
 
         public void Calculate_ValidInput_ReturnsExpectedResult(double probabilityA, double probabilityB, string selectedFunction, double expectedResult)
         {
-            // Arrange
-            var calculator = new ProbabilityCalculator();
+            double actualResult = _sut.Calculate(probabilityA, probabilityB, selectedFunction);
 
-            // Act
-            double actualResult = calculator.Calculate(probabilityA, probabilityB, selectedFunction);
-
-            // Assert
             Assert.Equal(expectedResult, actualResult);
         }
 
         [Fact]
         public void Calculate_InvalidFunctionName_ThrowsArgumentException()
         {
-            // Arrange
-            var calculator = new ProbabilityCalculator();
-
-            // Act & Assert
-            Assert.Throws<ArgumentException>(() => calculator.Calculate(0.5, 0.5, "invalid"));
+            Assert.Throws<ArgumentException>(() => _sut.Calculate(0.5, 0.5, "invalid"));
         }
     }
 }

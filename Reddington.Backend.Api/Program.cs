@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Reddington.Backend.Api.Models;
 using Reddington.Backend.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +13,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IProbabilityCalculator, ProbabilityCalculator>();
+var probabilityCalculator = new ProbabilityCalculator();
+
+builder.Services.AddSingleton<IProbabilityCalculator, ProbabilityCalculator>();
 builder.Services.AddScoped<IFileLogger, FileLogger>();
 
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
